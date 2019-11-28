@@ -20,6 +20,10 @@ const connection = mongoose.connection;
 const loginRoutes = require('./routes/login');
 app.use('/login', loginRoutes);
 
+//requiring book routes
+const bookRoutes = require('./routes/book');
+app.use('/book', bookRoutes);
+
 
 //
 connection.once('open', ()=>{
