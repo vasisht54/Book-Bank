@@ -2,49 +2,33 @@ const mongoose = require('mongoose');
 const admin = require('./admin.schema.server.js');
 const buyer = require('./buyer.schema.server.js');
 const seller = require('./seller.schema.server.js');
-
+const address = require('./address.schema.server.js');
+const userTypes = ["buyer", "seller", "admin"];
+//embedded obejcts of buyer, seller and address
 const user = mongoose.Schema({
- first_name: {
+   first_name: String,
+   last_name: String,
+   username: {
      type: String,
-     required: true,
-     trim: true,
-     minlength:3,
-     maxlength:10
+     required:true,
+     unique: true, 
+   },
+   password: {
+      type: String,
+      required:true,
+      unique: true, 
     },
- last_name: {
-    type: String,
-   required: true,
-    trim: true,
-    minlength:3,
-    maxlength:10
+   usertype:{
+      type: String,
+      enum: userTypes,
+      required:true
    },
- username: {
-    type: String,
-   required: true,
-    unique:true,
-    trim: true,
-    minlength:3,
-    maxlength:20
-   },
- password: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength:3,
-    maxlength:10
-   },
- userType: {
-    type: String,
-   required: true,
-    trim: true,
-    minlength:5,
-    maxlength:10
-   },
- admin: admin,
- buyer: buyer,
- seller:seller
-},{
-    timestamps:true
-}, {collection: 'user'})
+   admin: admin,
+   buyer: buyer,
+   seller: seller,
+   address:address
+}, {
+   timestamps: true
+}, { collection: 'user' })
 
 module.exports = user;
