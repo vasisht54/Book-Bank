@@ -20,4 +20,14 @@ router.route('/addBook').post((req,res)=>{
         .catch(err=>res.status(400).json('Error: '+err))
 });
 
+
+router.route('/deleteBook').delete((req,res)=>{
+    console.log(req.body.user);
+     book.deleteOne(
+      { title: req.body.title},
+   ) .then(() => res.send('book deleted'))
+   .catch(err => res.send({ status: 'failed to delete book', message: err }));
+  
+  })
+
 module.exports = router;

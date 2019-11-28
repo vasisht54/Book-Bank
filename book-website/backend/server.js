@@ -17,8 +17,8 @@ mongoose.connect(uri,{useNewUrlParser: true, useCreateIndex:true,useUnifiedTopol
 const connection = mongoose.connection;
 
 //requiring login routes
-const loginRoutes = require('./routes/login');
-app.use('/login', loginRoutes);
+const userRoutes = require('./routes/login');
+app.use('/user', userRoutes);
 
 //requiring book routes
 const bookRoutes = require('./routes/book');

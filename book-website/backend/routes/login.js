@@ -44,6 +44,15 @@ router.route('/updateUser').post((req,res)=>{
  ) .then(() => res.send('user updated'))
  .catch(err => res.send({ status: 'failed to update', message: err }));
 
+});
+
+router.route('/deleteUser').delete((req,res)=>{
+  console.log(req.body.user);
+   user.deleteOne(
+    { username: req.body.user.username},
+ ) .then(() => res.send('user deleted'))
+ .catch(err => res.send({ status: 'failed to delete', message: err }));
+
 })
 
 module.exports = router;
