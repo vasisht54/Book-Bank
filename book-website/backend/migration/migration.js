@@ -8,7 +8,7 @@ migrate = async()=>{
 // console.log(a);
 
 let searchCriteria = ["horror","faultinourstars","harrypotter","comedy","political","poetry","romance",
-"science", "suspense","poem","math"]
+"science", "suspense","poem","math","adult","children","animes","manga","kannada","bengalie", "harrypotter","soccer","cricket"]
 
 let structuredData;
 let count = 0;

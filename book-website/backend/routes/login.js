@@ -21,7 +21,7 @@ router.route('/register').post((req,res)=>{
 });
 
 //to update the user
-router.route('/updateUser').post((req,res)=>{
+router.route('/updateUser').put((req,res)=>{
     console.log("hi");
   console.log(req.body.user);
    userModel.updateOne(
@@ -42,7 +42,7 @@ router.route('/updateUser').post((req,res)=>{
        }
     }
  ) .then(() => res.send('user updated'))
- .catch(err => res.send({ status: 'failed to update', message: err }));
+ .catch(err => res.send({ status: 'failed to updateuser', message: err }));
 
 });
 
