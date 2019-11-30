@@ -10,6 +10,18 @@ router.route('/').get((req,res)=>{
 });
 
 
+
+//find by username
+router.route('/username').get((req,res)=>{
+    let query = req.query.q;
+    console.log(query)
+    user.find({username:query})
+        .then(users=>res.json(users))
+        .catch(err=>res.status(400).json('Error: '+err))
+});
+
+
+
 //to save new users
 router.route('/register').post((req,res)=>{
     const body = req.body;
@@ -23,20 +35,20 @@ router.route('/register').post((req,res)=>{
 //to update the user
 router.route('/updateUser').put((req,res)=>{
     console.log("hi");
-  console.log(req.body.user);
+  console.log(req.body);
    userModel.updateOne(
-    { username: req.body.user.username},
+    { username: req.body.username},
     { $set:
        {
-         first_name: req.body.user.first_name,
-         last_name: req.body.user.last_name,
-         password: req.body.user.password,
+         first_name: req.body.first_name,
+         last_name: req.body.last_name,
+         password: req.body.password,
          address: {
-           address : req.body.user.address.address,
-           pincode : req.body.user.address.pincode,
-           city  : req.body.user.address.city,
-           state : req.body.user.address.state,
-           country: req.body.user.address.country
+           address : req.body.address.address,
+           pincode : req.body.address.pincode,
+           city  : req.body.address.city,
+           state : req.body.address.state,
+           country: req.body.address.country
          }
 
        }
