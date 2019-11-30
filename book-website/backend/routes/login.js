@@ -36,7 +36,7 @@ router.route('/register').post((req,res)=>{
 router.route('/updateUser').put((req,res)=>{
     console.log("hi");
   console.log(req.body);
-   userModel.updateOne(
+   user.updateOne(
     { username: req.body.username},
     { $set:
        {
