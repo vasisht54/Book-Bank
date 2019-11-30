@@ -12,7 +12,7 @@ router.route('/').get((req,res)=>{
 
 //to save new users
 router.route('/register').post((req,res)=>{
-    const body = req.body.user;
+    const body = req.body;
     const newUser = new user(body);
 
     newUser.save()
