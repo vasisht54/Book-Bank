@@ -53,14 +53,22 @@ router.route('/deleteBook').delete((req,res)=>{
   })
 
 
+  router.route('/search').get((req,res)=>{
+      let query = req.query.q;
+     book.find({$or:[{title: {"$regex": query,"$options":"i"}},
+     {authors:{"$elemMatch":{"$regex":query,"$options":"i"}}},{categories:{"$elemMatch":{"$regex":query,"$options":"i"}}}]})
+      .then(books=>res.json(books))
+      .catch(err=>res.status(400).json('Error: '+err));
+  });
+
+
+  
 //   router.route('/search').get((req,res)=>{
-//       let query = req.query.q;
-
-//     //   book.find()
-//       .then(books=>res.json(books))
-//       .catch(err=>res.status(400).json('Error: '+err))
-
-
-//   })
+//     let query = req.query.q;
+//    book.find({$or:[{title: {"$regex": query,"options":"i"}},
+//    {authors:{"$elemMatch":{"$regex": query,"options":"i"}}},{categories:{"$elemMatch":{"$regex":query,"options":"i"}}}]})
+//     .then(books=>res.json(books))
+//     .catch(err=>res.status(400).json('Error: '+err));
+// })
 
 module.exports = router;
