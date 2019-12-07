@@ -13,20 +13,39 @@ router.route('/getAllBooks').get((req,res)=>{
 });
 
 
-//add book
-router.route('/addBook').post((req,res)=>{
-    const body = req.body;
-    const newBook = new book(body);
+//get all books by seller
+router.route('/booksBySeller').get((req,res)=>{
+    let query = req.query.q;
+    console.log(query);
+    book.find({seller:query})
+    .then(users=>res.json(users))
+    .catch(err=>res.status(400).json('Error: '+err))
+})
 
+//add book
+router.route('/addBook').post(async(req,res)=>{
+    const body = req.body;
+    let user = await axios.get(url+"user/username?q="+body.seller);
+
+    if(user.data.length==1){
+    body.seller = user.data[0]._id;
+    const newBook = new book(body);
     newBook.save()
-        .then(()=>res.json('Book added!!'))
+        .then(()=>res.json({status:'Book added!!'}))
         .catch(err=>res.status(400).json('Error: '+err))
+    }else{
+        res.send({status:'failed to find seller'});
+    }
+
 });
 
-
-router.route('/updateBook').put((req,res)=>{
+//update book
+router.route('/updateBook').put(async(req,res)=>{
     let body = req.body
-   book.updateOne(
+    let user = await axios.get(url+"user/username?q="+body.seller);
+    if(user.data.length==1){
+    body.seller = user.data[0]._id; 
+     book.updateOne(
     { title: body.title},
     { $set:
        {
@@ -40,11 +59,20 @@ router.route('/updateBook').put((req,res)=>{
     image : body.image,
     language: body.language,
     price: body.price,  
-    seller: {type: mongoose.Schema.Types.ObjectId, ref: 'user'}
+    seller: body.seller
        }
     }
- ) .then(() => res.send('book updated'))
+ ) .then((data) => {
+    if(data.nModified==0){
+        res.send({status:'book not found'});
+    }else{
+        res.send({status:'book updated'});
+    }
+    })
  .catch(err => res.send({ status: 'updated book', message: err }));
+}else{
+    res.send({status:'failed to find seller'});
+}
 });
 
 
@@ -53,12 +81,22 @@ router.route('/deleteBook').delete(async(req,res)=>{
     // console.log("user", user.data);
     // console.log("length",user.data[0].length);
     if(user.data.length==1){   
-        console.log("here");
+        // console.log("here");
         
     req.body.seller = user.data[0]._id; 
+
+    // console.log("title", req.body.title);
+    // console.log("seller", req.body.seller);
+
      book.deleteOne(
         { title: req.body.title, seller:req.body.seller},
-     ) .then(() => res.send('book deleted'))
+     ) .then((data) => {
+        if(data.deletedCount==0){
+            res.send({status:'book not found'});
+        }else{
+            res.send({status:'book deleted'});
+        }
+     })
      .catch(err => res.send({ status: 'failed to delete book', message: err }));
     }else{
         res.send({status:'failed to find seller'});
@@ -74,14 +112,5 @@ router.route('/deleteBook').delete(async(req,res)=>{
       .catch(err=>res.status(400).json('Error: '+err));
   });
 
-
-  
-//   router.route('/search').get((req,res)=>{
-//     let query = req.query.q;
-//    book.find({$or:[{title: {"$regex": query,"options":"i"}},
-//    {authors:{"$elemMatch":{"$regex": query,"options":"i"}}},{categories:{"$elemMatch":{"$regex":query,"options":"i"}}}]})
-//     .then(books=>res.json(books))
-//     .catch(err=>res.status(400).json('Error: '+err));
-// })
 
 module.exports = router;
