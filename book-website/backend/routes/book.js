@@ -1,6 +1,9 @@
 const router = require('express').Router();
+const axios = require('axios');
 
 const book = require('../models/book/book.model.server');
+require('dotenv').config();
+let url = process.env.URL;
 
 //get all books
 router.route('/getAllBooks').get((req,res)=>{
@@ -37,22 +40,29 @@ router.route('/updateBook').put((req,res)=>{
     image : body.image,
     language: body.language,
     price: body.price,  
-    seller: body.seller, 
+    seller: {type: mongoose.Schema.Types.ObjectId, ref: 'user'}
        }
     }
- ) .then((data) =>{
-     
-    res.send('book updated');
- }) .catch(err => res.send({ status: 'updated book', message: err }));
+ ) .then(() => res.send('book updated'))
+ .catch(err => res.send({ status: 'updated book', message: err }));
+});
 
 
-
-router.route('/deleteBook').delete((req,res)=>{
+router.route('/deleteBook').delete(async(req,res)=>{
+    let user = await axios.get(url+"user/username?q="+req.body.seller);
+    // console.log("user", user.data);
+    // console.log("length",user.data[0].length);
+    if(user.data.length==1){   
+        console.log("here");
+        
+    req.body.seller = user.data[0]._id; 
      book.deleteOne(
-      { title: req.body.title},
-   ) .then(() => res.send('book deleted'))
-   .catch(err => res.send({ status: 'failed to delete book', message: err }));
-  
+        { title: req.body.title, seller:req.body.seller},
+     ) .then(() => res.send('book deleted'))
+     .catch(err => res.send({ status: 'failed to delete book', message: err }));
+    }else{
+        res.send({status:'failed to find seller'});
+    }
   })
 
 

@@ -1,7 +1,7 @@
 const router = require('express').Router();
-​
+
 const user = require('../models/user/user.model.server');
-​
+
 //find all users
 router.route('/').get((req, res) => {
   //console.log("deepak");  
@@ -9,9 +9,9 @@ router.route('/').get((req, res) => {
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err))
 });
-​
-​
-​
+
+
+
 //find by username
 router.route('/username').get((req, res) => {
   let query = req.query.q;
@@ -20,19 +20,19 @@ router.route('/username').get((req, res) => {
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err))
 });
-​
-​
-​
+
+
+
 //to save new users
 router.route('/register').post((req, res) => {
   const body = req.body;
   const newUser = new user(body);
-​
+
   newUser.save()
     .then(() => res.json('User added!!'))
     .catch(err => res.status(400).json('Error: ' + err))
 });
-​
+
 //to update the user
 router.route('/updateUser').put((req, res) => {
   console.log("update-server");
@@ -55,7 +55,7 @@ router.route('/updateUser').put((req, res) => {
           state: req.body.user.address.state,
           country: req.body.user.address.country
         }
-​
+
       }
     }
   ).then((data) => {
@@ -67,15 +67,17 @@ router.route('/updateUser').put((req, res) => {
     .catch(err =>
       res.send({ status: 'failed to updateuser', message: err })
     );
-​
+
 });
-​
+
 router.route('/deleteUser').delete((req, res) => {
   user.findOne({ username: req.body.username })
     .then(users => {
       console.log(users);
-      console.log("HH1", users.usertype);
-      if (users.usertype === "admin")
+      // console.log("HH1", users.usertype);
+      if(users === null)
+        res.status(200).json({ 'status': 200, 'message': 'User not found' });
+      else if (users.usertype === "admin")
         res.status(200).json({ 'status': 200, 'message': 'Cannot delete admin' });
       else {
         user.deleteOne(
@@ -94,5 +96,5 @@ router.route('/deleteUser').delete((req, res) => {
       }
     });
 })
-​
+
 module.exports = router;
