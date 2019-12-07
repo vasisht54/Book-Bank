@@ -36,12 +36,15 @@ router.route('/updateBook').put((req,res)=>{
     categories:body.categories,
     image : body.image,
     language: body.language,
-    price: body.price,   
+    price: body.price,  
+    seller: body.seller, 
        }
     }
- ) .then(() => res.send('book updated'))
- .catch(err => res.send({ status: 'updated book', message: err }));
-});
+ ) .then((data) =>{
+     
+    res.send('book updated');
+ }) .catch(err => res.send({ status: 'updated book', message: err }));
+
 
 
 router.route('/deleteBook').delete((req,res)=>{

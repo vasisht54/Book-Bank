@@ -58,10 +58,11 @@ router.route('/updateUser').put((req,res)=>{
 
 });
 
+//delete user
 router.route('/deleteUser').delete((req,res)=>{
-  console.log(req.body.user);
+  console.log(req.body);
    user.deleteOne(
-    { username: req.body.user.username},
+    { username: req.body.username},
  ) .then(() => res.send('user deleted'))
  .catch(err => res.send({ status: 'failed to delete', message: err }));
 

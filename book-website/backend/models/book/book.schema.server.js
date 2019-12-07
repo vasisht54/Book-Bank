@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const image = require('./image.schema.server');
 const price = require('./price.schema.server');
 
+
 const book = mongoose.Schema({
     title: {
        type:String,
-       unique: true,
       required: true
    },
     authors: { type : Array , "default" : [] },
@@ -19,7 +19,7 @@ const book = mongoose.Schema({
     image : image,
     language: String,
     price: price,   
-    
+    seller: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
  }, {
     timestamps: true
  }, { collection: 'book' })
