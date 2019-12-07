@@ -18,7 +18,7 @@ router.route('/booksBySeller').get((req,res)=>{
     let query = req.query.q;
     console.log(query);
     book.find({seller:query})
-    .then(users=>res.json(users))
+    .then(books=>res.json(books))
     .catch(err=>res.status(400).json('Error: '+err))
 })
 
@@ -49,17 +49,12 @@ router.route('/updateBook').put(async(req,res)=>{
     { title: body.title},
     { $set:
        {
-    authors:body.authors,
     publisher : body.publisher,
     publishedDate: body.publishedDate,
     description: body.description,
-    industryIdentifiers: body.industryIdentifiers,
     pagecount: body.pagecount,
     categories:body.categories,
-    image : body.image,
-    language: body.language,
     price: body.price,  
-    seller: body.seller
        }
     }
  ) .then((data) => {
@@ -76,17 +71,14 @@ router.route('/updateBook').put(async(req,res)=>{
 });
 
 
+//delete book by title and user id
 router.route('/deleteBook').delete(async(req,res)=>{
     let user = await axios.get(url+"user/username?q="+req.body.seller);
     // console.log("user", user.data);
     // console.log("length",user.data[0].length);
     if(user.data.length==1){   
-        // console.log("here");
-        
+        // console.log("here");     
     req.body.seller = user.data[0]._id; 
-
-    // console.log("title", req.body.title);
-    // console.log("seller", req.body.seller);
 
      book.deleteOne(
         { title: req.body.title, seller:req.body.seller},
@@ -102,6 +94,29 @@ router.route('/deleteBook').delete(async(req,res)=>{
         res.send({status:'failed to find seller'});
     }
   })
+
+
+//delete ALLbook by userId
+  router.route('/deleteBookByUserId').delete(async(req,res)=>{
+    // console.log("user", user.data);
+    // console.log("length",user.data[0].length);
+    let query = req.query.q;    
+     book.deleteMany(
+        {seller:query},
+     ).then((data) => {
+        if(data.deletedCount==0){
+            res.send({status:'book not found'});
+        }else{
+            res.send({status:'books deleted'});
+        }
+     })
+     .catch(err => res.send({ status: 'failed to delete books', message: err }));
+
+  })
+
+
+
+
 
 
   router.route('/search').get((req,res)=>{

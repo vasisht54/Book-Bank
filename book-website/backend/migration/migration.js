@@ -93,8 +93,6 @@ searchCriteria.forEach(async(ele) => {
     }
     let res = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${ele}`);
 
-
-
     // console.log(Object.keys(res.data.items).length);
     // console.log(res.data.items);
 if(res.data.hasOwnProperty("items")){
@@ -154,9 +152,7 @@ if(res.data.hasOwnProperty("items")){
         } catch(e){
             console.log(e);
         }
-            // console.log(structuredData);
-        
-         
+            // console.log(structuredData);      
            
     });
 

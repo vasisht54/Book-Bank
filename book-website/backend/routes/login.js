@@ -1,6 +1,8 @@
 const router = require('express').Router();
 
 const user = require('../models/user/user.model.server');
+const axios = require('axios');
+let url = process.env.URL;
 
 //find all users
 router.route('/').get((req, res) => {
@@ -70,11 +72,19 @@ router.route('/updateUser').put((req, res) => {
 
 });
 
-router.route('/deleteUser').delete((req, res) => {
+router.route('/deleteUser').delete(async(req, res) => {
   user.findOne({ username: req.body.username })
-    .then(users => {
+    .then(async(users) => {
       console.log(users);
-      // console.log("HH1", users.usertype);
+
+      if(users.usertype == "seller"){
+        try{
+          await axios.delete(url+"book/deleteBookByUserId?q="+users._id);
+        //  console.log("resulttt::", res);
+        }catch(e){
+         console.log(e);
+        }
+      }
       if(users === null)
         res.status(200).json({ 'status': 200, 'message': 'User not found' });
       else if (users.usertype === "admin")
