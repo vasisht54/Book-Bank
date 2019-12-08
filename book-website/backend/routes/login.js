@@ -30,8 +30,6 @@ router.route('/username').get((req, res) => {
 //to save new users
 router.route('/register').post((req, res) => {
   const body = req.body;
-  body.password = hash;
-
   const newUser = new user(body);
 
   newUser.save()
