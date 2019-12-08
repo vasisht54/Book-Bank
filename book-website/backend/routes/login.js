@@ -30,7 +30,6 @@ router.route('/username').get((req, res) => {
 //to save new users
 router.route('/register').post((req, res) => {
   const body = req.body;
-  let hash = bcrypt.hashSync(body.password, 10);
   body.password = hash;
 
   const newUser = new user(body);

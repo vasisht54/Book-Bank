@@ -19,8 +19,8 @@ router.route('/addReview').post(async(req, res) => {
 
     console.log(req.body.book);
     console.log(req.body.buyer);
-
-    let response = await axios.get('http://localhost:5000/review/findReviewByBookUser',{
+    
+    let response = await axios.get(url+'/review/findReviewByBookUser',{
        data:{book:req.body.book,
         buyer:req.body.buyer
        }
