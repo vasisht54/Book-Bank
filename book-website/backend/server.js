@@ -32,6 +32,10 @@ app.use('/review',reviewRoutes);
 const cartRoutes = require('./routes/cart');
 app.use('/cart', cartRoutes);
 
+// //requiring cart
+const orderRoutes = require('./routes/order');
+app.use('/order', orderRoutes);
+
 
 //
 connection.once('open', ()=>{
