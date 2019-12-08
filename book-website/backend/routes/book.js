@@ -72,6 +72,7 @@ router.route('/updateBook').put(async(req,res)=>{
     pagecount: body.pagecount,
     categories:body.categories,
     price: body.price,  
+    seller: body.seller
        }
     }
  ) .then((data) => {
