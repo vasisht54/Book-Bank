@@ -19,7 +19,7 @@ router.route('/addReview').post(async(req, res) => {
 
     console.log(req.body.book);
     console.log(req.body.buyer);
-    
+
     let response = await axios.get(url+'/review/findReviewByBookUser',{
        data:{book:req.body.book,
         buyer:req.body.buyer
@@ -93,6 +93,24 @@ router.route('/deleteReview').delete(async(req,res)=>{
     let book = req.body.book;
      review.deleteOne(
         {buyer:buyer,book:book},
+     ).then((data) => {
+        if(data.deletedCount==0){
+            res.send({status:'this book has no reviews by user'});
+        }else{
+            res.send({status:'reviews deleted'});
+        }
+     })
+     .catch(err => res.send({ status: 'failed to delete reviews', message: err }));
+
+  });
+
+
+  //to delete the review
+router.route('/deleteReviewById').delete(async(req,res)=>{
+    let query = req.query.q;  
+    
+     review.deleteOne(
+        {_id:query},
      ).then((data) => {
         if(data.deletedCount==0){
             res.send({status:'this book has no reviews by user'});

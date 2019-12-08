@@ -21,6 +21,14 @@ router.route('/booksById').get((req,res)=>{
         .catch(err=>res.status(400).json('Error: '+err))
 });
 
+//get book by title
+router.route('/booksByTitle').get((req,res)=>{
+    let query = req.query.q;
+    book.find({title: {"$regex": query,"$options":"i"}})
+        .then(users=>res.json(users))
+        .catch(err=>res.status(400).json('Error: '+err))
+});
+
 
 //get all books by seller
 router.route('/booksBySeller').get((req,res)=>{
