@@ -31,17 +31,12 @@ router.route('/register').post((req, res) => {
   const newUser = new user(body);
 
   newUser.save()
-    .then(() => res.json('User added!!'))
-    .catch(err => res.status(400).json('Error: ' + err))
+    .then(() => res.send({status:'User saved!'}))
+    .catch(err => res.send({Status: 'Failed to register!'}))
 });
 
 //to update the user
 router.route('/updateUser').put((req, res) => {
-  console.log("update-server");
-  console.log(req.body);
-  console.log(req.body.user.username);
-  console.log(req.body.user.first_name);
-  console.log(req.body.user.address.country);
   user.updateOne(
     { username: req.body.user.username },
     {

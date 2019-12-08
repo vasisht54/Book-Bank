@@ -64,7 +64,7 @@ router.route('/updateBook').put(async(req,res)=>{
         res.send({status:'book updated'});
     }
     })
- .catch(err => res.send({ status: 'updated book', message: err }));
+ .catch(err => res.send({ status: 'failed to updated book', message: err }));
 }else{
     res.send({status:'failed to find seller'});
 }
@@ -76,6 +76,7 @@ router.route('/deleteBook').delete(async(req,res)=>{
     let user = await axios.get(url+"user/username?q="+req.body.seller);
     // console.log("user", user.data);
     // console.log("length",user.data[0].length);
+    var seller_username = req.body.seller;
     if(user.data.length==1){   
         // console.log("here");     
     req.body.seller = user.data[0]._id; 
@@ -84,9 +85,9 @@ router.route('/deleteBook').delete(async(req,res)=>{
         { title: req.body.title, seller:req.body.seller},
      ) .then((data) => {
         if(data.deletedCount==0){
-            res.send({status:'book not found'});
+            res.send({ status: `${seller_username} did not sell book ${req.body.title}` });
         }else{
-            res.send({status:'book deleted'});
+            res.send({ status: `book ${req.body.title} deleted` });
         }
      })
      .catch(err => res.send({ status: 'failed to delete book', message: err }));

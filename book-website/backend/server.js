@@ -24,6 +24,10 @@ app.use('/user', userRoutes);
 const bookRoutes = require('./routes/book');
 app.use('/book', bookRoutes);
 
+//requiring accessories
+const reviewRoutes = require('./routes/review');
+app.use('/review',reviewRoutes);
+
 
 //
 connection.once('open', ()=>{
