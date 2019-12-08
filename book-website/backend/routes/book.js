@@ -116,10 +116,6 @@ router.route('/deleteBook').delete(async(req,res)=>{
   })
 
 
-
-
-
-
   router.route('/search').get((req,res)=>{
       let query = req.query.q;
      book.find({$or:[{title: {"$regex": query,"$options":"i"}},

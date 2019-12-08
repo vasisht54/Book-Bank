@@ -6,6 +6,6 @@ const review = mongoose.Schema({
    review: String,
  }, {
     timestamps: true
- }, { collection: 'accessories' })
+ }, { collection: 'review' })
  
  module.exports = review;

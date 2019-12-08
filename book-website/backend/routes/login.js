@@ -32,7 +32,7 @@ router.route('/register').post((req, res) => {
 
   newUser.save()
     .then(() => res.send({status:'User saved!'}))
-    .catch(err => res.send({Status: 'Failed to register!'}))
+    .catch(err => res.send({status: 'Failed to register!'}))
 });
 
 //to update the user
@@ -71,7 +71,9 @@ router.route('/deleteUser').delete(async(req, res) => {
   user.findOne({ username: req.body.username })
     .then(async(users) => {
       console.log(users);
-
+      if(users === null)
+       return res.status(200).json({ 'status': 200, 'message': 'User not found' });
+  
       if(users.usertype == "seller"){
         try{
           await axios.delete(url+"book/deleteBookByUserId?q="+users._id);
@@ -80,9 +82,7 @@ router.route('/deleteUser').delete(async(req, res) => {
          console.log(e);
         }
       }
-      if(users === null)
-        res.status(200).json({ 'status': 200, 'message': 'User not found' });
-      else if (users.usertype === "admin")
+      if (users.usertype === "admin")
         res.status(200).json({ 'status': 200, 'message': 'Cannot delete admin' });
       else {
         user.deleteOne(

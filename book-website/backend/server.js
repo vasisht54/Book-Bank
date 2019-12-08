@@ -24,9 +24,13 @@ app.use('/user', userRoutes);
 const bookRoutes = require('./routes/book');
 app.use('/book', bookRoutes);
 
-//requiring accessories
+//requiring reviews
 const reviewRoutes = require('./routes/review');
 app.use('/review',reviewRoutes);
+
+// //requiring cart
+const cartRoutes = require('./routes/cart');
+app.use('/cart', cartRoutes);
 
 
 //

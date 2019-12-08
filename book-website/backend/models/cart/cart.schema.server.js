@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const review = mongoose.Schema({
+const cart = mongoose.Schema({
    buyer: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
-   book : String,
+   book : {type: mongoose.Schema.Types.ObjectId, ref: 'book'},
  }, {
     timestamps: true
- }, { collection: 'accessories' })
+ }, { collection: 'cart' })
  
- module.exports = review;
+ module.exports = cart;
