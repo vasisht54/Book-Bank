@@ -2,6 +2,8 @@ const router = require('express').Router();
 
 const user = require('../models/user/user.model.server');
 const axios = require('axios');
+
+
 let url = process.env.URL;
 
 //find all users
@@ -28,6 +30,9 @@ router.route('/username').get((req, res) => {
 //to save new users
 router.route('/register').post((req, res) => {
   const body = req.body;
+  let hash = bcrypt.hashSync(body.password, 10);
+  body.password = hash;
+
   const newUser = new user(body);
 
   newUser.save()
@@ -37,6 +42,9 @@ router.route('/register').post((req, res) => {
 
 //to update the user
 router.route('/updateUser').put((req, res) => {
+
+
+
   user.updateOne(
     { username: req.body.user.username },
     {

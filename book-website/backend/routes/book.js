@@ -13,6 +13,15 @@ router.route('/getAllBooks').get((req,res)=>{
 });
 
 
+//get book by id
+router.route('/booksById').get((req,res)=>{
+    let query = req.query.q;
+    book.findById(query)
+        .then(users=>res.json(users))
+        .catch(err=>res.status(400).json('Error: '+err))
+});
+
+
 //get all books by seller
 router.route('/booksBySeller').get((req,res)=>{
     let query = req.query.q;
