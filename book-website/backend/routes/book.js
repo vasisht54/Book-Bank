@@ -44,7 +44,7 @@ router.route('/addBook').post(async(req,res)=>{
     const body = req.body;
     let user = await axios.get(url+"user/username?q="+body.seller);
 
-    if(user.data.length==1 && user.data.usertype == "seller"){
+    if(user.data.length==1 && user.data[0].usertype == "seller"){
     body.seller = user.data[0]._id;
     const newBook = new book(body);
     newBook.save()
@@ -60,7 +60,7 @@ router.route('/addBook').post(async(req,res)=>{
 router.route('/updateBook').put(async(req,res)=>{
     let body = req.body
     let user = await axios.get(url+"user/username?q="+body.seller);
-    if(user.data.length==1 && user.data.usertype == "seller"){
+    if(user.data.length==1 && user.data[0].usertype == "seller"){
     body.seller = user.data[0]._id; 
      book.updateOne(
     { title: body.title},

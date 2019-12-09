@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const axios = require('axios');
 
-const cart = require('../models/order/order.model.server');
+const order = require('../models/order/order.model.server');
 
 require('dotenv').config();
 let url = process.env.URL;
@@ -10,7 +10,7 @@ let url = process.env.URL;
 //get all user cart
 router.route('/getUserOrders').get((req,res)=>{
     let query = req.query.q;
-    cart.find({buyer:query})
+    order.find({buyer:query})
         .then(cart=>res.json(cart))
         .catch(err=>res.status(400).json('Error: '+err))
 });
@@ -18,50 +18,52 @@ router.route('/getUserOrders').get((req,res)=>{
 
 
 //add to cart
-router.route('/addToCart').post((req,res)=>{
+router.route('/addToOrder').post((req,res)=>{
     let body = req.body;
-    const newCart = new cart(body);
-    newCart.save()
-        .then(()=>res.json({status:'Book added to cart!!'}))
+    const newOrder = new order(body);
+    newOrder.save()
+        .then(()=>res.json({status:'Order placed'}))
         .catch(err=>res.status(400).json('Error: '+err))
 });
 
 
-//to delete the books from cart
-router.route('/deleteBooksFromCart').delete(async(req,res)=>{
+//to delete orders based on username and item
+router.route('/deleteBooksFromOrder').delete(async(req,res)=>{
     // console.log("user", user.data);
     // console.log("length",user.data[0].length);
     let buyer = req.body.buyer;
     let book = req.body.book;
-     cart.deleteOne(
+     order.deleteOne(
         {buyer:buyer,book:book},
      ).then((data) => {
         if(data.deletedCount==0){
-            res.send({status:'this book is not in cart'});
+            res.send({status:'this book is not in order'});
         }else{
             res.send({status:'book deleted from cart'});
         }
      })
      .catch(err => res.send({ status: 'failed to delete book from cart', message: err }));
-
   })
 
 
-  //to delete the all items from cart of a user
-router.route('/clearCart').delete(async(req,res)=>{
-    let query = req.query.q;
-     cart.deleteMany(
-        {buyer:query},
+
+  router.route('/deleteOrderById').delete(async(req,res)=>{
+    // console.log("user", user.data);
+    // console.log("length",user.data[0].length);
+
+     order.deleteOne(
+        {buyer:buyer,book:book},
      ).then((data) => {
         if(data.deletedCount==0){
-            res.send({status:'Cart is empty for the user'});
+            res.send({status:'this book is not in order'});
         }else{
-            res.send({status:'cart cleared for user'});
+            res.send({status:'book deleted from cart'});
         }
      })
-     .catch(err => res.send({ status: 'failed to clear cart of the user', message: err }));
-
+     .catch(err => res.send({ status: 'failed to delete book from cart', message: err }));
   })
+
+
 
 
 module.exports = router;

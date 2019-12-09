@@ -19,6 +19,11 @@ router.route('/addReview').post(async(req, res) => {
 
     console.log(req.body.book);
     console.log(req.body.buyer);
+     
+    let bookRes  = await axios.get('http://localhost:5000/book/booksById?q='+req.body.book);
+    if(bookRes.data.length==0){
+        return res.send({status:"Book doesnot exist!!"})
+    }
 
     let response = await axios.get(url+'/review/findReviewByBookUser',{
        data:{book:req.body.book,

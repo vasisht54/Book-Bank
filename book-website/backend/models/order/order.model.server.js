@@ -1,3 +1,3 @@
 const mongoose = require('mongoose')
-const orderSchema = require('./cart.schema.server')
+const orderSchema = require('./order.schema.server')
 module.exports = mongoose.model('order', orderSchema)
