@@ -24,7 +24,7 @@ router.route('/booksById').get((req,res)=>{
 //get book by title
 router.route('/booksByTitle').get((req,res)=>{
     let query = req.query.q;
-    book.find({title: {"$regex": query,"$options":"i"}})
+    book.find({title: query})
         .then(users=>res.json(users))
         .catch(err=>res.status(400).json('Error: '+err))
 });
