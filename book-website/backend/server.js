@@ -28,9 +28,13 @@ app.use('/book', bookRoutes);
 const reviewRoutes = require('./routes/review');
 app.use('/review',reviewRoutes);
 
-// //requiring cart
+ //requiring cart
 const cartRoutes = require('./routes/cart');
 app.use('/cart', cartRoutes);
+
+//requiring seller review
+const sellerReviewRoutes = require('./routes/sellerReview');
+app.use('/sellerReview',sellerReviewRoutes);
 
 // //requiring cart
 const orderRoutes = require('./routes/order');
@@ -47,5 +51,5 @@ connection.once('open', ()=>{
 
 
 app.listen(port, ()=>{
-    console.log(`Serve is running on port: ${port}`);
+    console.log(`Server is running on port: ${port}`);
 })

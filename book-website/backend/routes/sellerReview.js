@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const review = require('../models/review/review.model.server');
+const review = require('../models/sellerReview/sellerReview.model.server');
 require('dotenv').config();
 let url = process.env.URL;
 
@@ -16,68 +16,39 @@ router.route('/getAllReviews').get((req,res)=>{
 
 //to save new review
 router.route('/addReview').post(async(req, res) => {
-    try{
-    let bookRes  = await axios.get(url+'book/booksByTitle?q='+req.body.book);
-    let userRes  = await axios.get(url+'user/username?q='+ req.body.buyer);
+    let body = req.body;
+    let sellerRes  = await axios.get(url+'user/username?q='+req.body.seller);
+    let buyerRes  = await axios.get(url+'user/username?q='+ req.body.buyer);
 
-    // console.log(userRes);
-    if(userRes.data[0].usertype!= 'buyer'){
+    try{
+    if(buyerRes.data[0].usertype!= 'buyer'){
         return res.send({status: "Only buyer can review the book!!"});
     }
-    // console.log(bookRes.data);
-    if(bookRes.data.length>0){
-        req.body.book = bookRes.data[0].title;
-    let response = await axios.get(url+'review/findReviewByBookUser',{
-       data:{
-        book:req.body.book,
-        buyer:req.body.buyer
-       }
-    })
-   if(response.data.length==0){
-    const body = req.body;
+
+    if(sellerRes.data[0].usertype!= 'seller'){
+        return res.send({status: "Only seller can be reviewed!!"});
+    }
+
+   let resCheck = await review.find({buyer:body.buyer, seller:body.seller});
+    if(resCheck.length>0){
+       return res.send({status:"Buyer can review the seller only once"})
+    }
     const newReview = new review(body);
     newReview.save()
-      .then(() => res.send({status:"review added!!"}))
-      .catch(err => res.status(400).json('Error: ' + err))
-   }else{
-      return res.send({status:"User can only write one review for a book!!"})
-   }
-}else{
-    return res.send({status:"book is not present!!"})
-}
+    .then(() => res.send({status:"review added!!"}))
+    .catch(err => res.status(400).json('Error: ' + err))
+
 }catch(e){
-    console.log(e);
-}
+    res.send({status:"Wrong data entry"})
+ }
+
   });
 
 
-//edit review
-router.route('/editReview').put((req,res)=>{
-    const body = req.body;
-    review.updateOne(
-        { book: body.book, buyer: body.buyer},
-        { $set:
-           {
-            review:body.review
-           }
-        }
-     ).then((data) => {
-        if(data.nModified==0){
-            res.send({status:'review not found'});
-        }else{
-            res.send({status:'review updated'});
-        }
-        })
-     .catch(err => res.send({ status: 'failed to update review', message: err }));
-})
-
-
-
-
   //to find reviews by book
-router.route('/findReviewByBook').get((req, res) => {
+router.route('/findReviewBySeller').get((req, res) => {
     let query = req.query.q;   
-    review.find({book:query})
+    review.find({seller:query})
         .then(review=>{
             res.json(review);})
       .catch(err => res.status(400).json('Error: ' + err))
@@ -87,10 +58,10 @@ router.route('/findReviewByBook').get((req, res) => {
 
   
   //to find reviews by book and user
-router.route('/findReviewByBookUser').get((req, res) => {
-    let buyer = req.body.buyer;
-    let book = req.body.book; 
-    review.find({book:book, buyer:buyer})
+router.route('/findReviewBySeller').get((req, res) => {
+    let seller = req.body.seller;
+    let buyer = req.body.buyer; 
+    review.find({seller:seller, buyer:buyer})
         .then(review=>{ 
         res.json(review);})
       .catch(err => res.status(400).json('Error: ' + err))

@@ -45,12 +45,12 @@ router.route('/deleteBooksFromOrder').delete(async(req,res)=>{
         {buyer:buyer,book:book},
      ).then((data) => {
         if(data.deletedCount==0){
-            res.send({status:'this book is not in order'});
+            res.send({status:'Order is not available!'});
         }else{
-            res.send({status:'book deleted from cart'});
+            res.send({status:'Order deleted!'});
         }
      })
-     .catch(err => res.send({ status: 'failed to delete book from cart', message: err }));
+     .catch(err => res.send({ status: 'Failed to delete', message: err }));
   })
 
 
@@ -63,12 +63,12 @@ router.route('/deleteBooksFromOrder').delete(async(req,res)=>{
         {_id:param},
      ).then((data) => {
         if(data.deletedCount==0){
-            res.send({status:'this book is not in order'});
+            res.send({status:'Order is not available!'});
         }else{
-            res.send({status:'book deleted from cart'});
+            res.send({status:'Order deleted!'});
         }
      })
-     .catch(err => res.send({ status: 'failed to delete book from cart', message: err }));
+     .catch(err => res.send({ status: 'Failed to delete', message: err }));
   })
 
 
