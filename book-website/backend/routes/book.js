@@ -134,6 +134,27 @@ router.route('/deleteBook').delete(async(req,res)=>{
   })
 
 
+
+  
+//delete book by title
+router.route('/deleteBookByTitle').delete(async(req,res)=>{
+    // console.log("user", user.data);
+    // console.log("length",user.data[0].length);
+    let query = req.query.q;    
+     book.deleteMany(
+        {title:query},
+     ).then((data) => {
+        if(data.deletedCount==0){
+            res.send({status:'book not found'});
+        }else{
+            res.send({status:'books deleted'});
+        }
+     })
+     .catch(err => res.send({ status: 'failed to delete books', message: err }));
+
+  })
+
+
   router.route('/search').get((req,res)=>{
       let query = req.query.q;
      book.find({$or:[{title: {"$regex": query,"$options":"i"}},
