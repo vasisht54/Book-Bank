@@ -17,8 +17,8 @@ router.route('/getAllReviews').get((req,res)=>{
 //to save new review
 router.route('/addReview').post(async(req, res) => {
     try{
-    let bookRes  = await axios.get(url+'book/booksById?q='+req.body.book);
-    if(bookRes.data.hasOwnProperty('title')){
+    let bookRes  = await axios.get(url+'book/booksByTitle?q='+req.body.book);
+    if(bookRes.data.length>0){
     let response = await axios.get(url+'review/findReviewByBookUser',{
        data:{
         book:req.body.book,
