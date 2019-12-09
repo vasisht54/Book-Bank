@@ -7,7 +7,7 @@ require('dotenv').config();
 let url = process.env.URL;
 
 
-//get all user cart
+//get all user order
 router.route('/getUserOrders').get((req,res)=>{
     let query = req.query.q;
     order.find({buyer:query})
@@ -15,6 +15,14 @@ router.route('/getUserOrders').get((req,res)=>{
         .catch(err=>res.status(400).json('Error: '+err))
 });
 
+
+//get all seller order
+router.route('/getSellerOrders').get((req,res)=>{
+    let query = req.query.q;
+    order.find({seller:query})
+        .then(cart=>res.json(cart))
+        .catch(err=>res.status(400).json('Error: '+err))
+})
 
 
 //add to cart
@@ -62,6 +70,7 @@ router.route('/deleteBooksFromOrder').delete(async(req,res)=>{
      })
      .catch(err => res.send({ status: 'failed to delete book from cart', message: err }));
   })
+
 
 
 
