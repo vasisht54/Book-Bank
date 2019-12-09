@@ -10,7 +10,6 @@ let searchCriteria = ["horror","faultinourstars","harrypotter","comedy","politic
 let structuredData;
 let count = 0;
 let criteria_count = 0;
-let seller = {};
 
 
 try{
@@ -23,18 +22,14 @@ try{
     // console.log("errr:::::",e);
 }
 
-searchCriteria.forEach(async(ele) => {
-    criteria_count = criteria_count + 1;
-    console.log("count of criteria",criteria_count);
-    if(criteria_count>0&&criteria_count<8){
-        seller = "steve";
-    }if(criteria_count>=8 && criteria_count<14){
-        seller = "adam";
-    }if(criteria_count>=14){
+searchCriteria.forEach(async(ele,index) => {
+    let seller = "bob";
+    if(index<6){
+        seller = "joey";
+    }
+    if(index>=6 && index<12){
         seller = "monica";
     }
-
-
 
     let res = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${ele}`);
 
@@ -123,7 +118,7 @@ await axios.post(url+"user/register", {
 first_name:"bob",
 last_name: "smith",
 username: "bob",
-password: "bob123",
+password: "bob",
 seller:{
     sellerAgreement: true
 },
@@ -180,7 +175,7 @@ await axios.post(url+"user/register", {
 first_name:"alice",
 last_name: "wonderland",
 username: "alice",
-password: "alice123",
+password: "alice",
 buyer:{
     buyerAgreement: true
 },
