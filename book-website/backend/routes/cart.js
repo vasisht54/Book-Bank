@@ -15,10 +15,31 @@ router.route('/getUserCart').get((req,res)=>{
         .catch(err=>res.status(400).json('Error: '+err))
 });
 
+//find the item in cart
+router.route('/findItemInCart').get((req,res)=>{
+    let buyer = req.body.buyer;
+    let book = req.body.book;
+    cart.find({buyer:buyer,book:book})
+        .then(cart=>res.json(cart))
+        .catch(err=>res.status(400).json('Error: '+err))
+});
+
 
 
 //add to cart
-router.route('/addToCart').post((req,res)=>{
+router.route('/addToCart').post(async(req,res)=>{
+
+    let response = await axios.get(url+'cart/findItemInCart',{
+        data:{
+         book:req.body.book,
+         buyer:req.body.buyer
+        }
+     })
+     console.log(response);
+     if(response.body.length>0){  
+         req.body.quantity = response.body[0].quantity +1;
+     }
+
     let body = req.body;
     const newCart = new cart(body);
     newCart.save()

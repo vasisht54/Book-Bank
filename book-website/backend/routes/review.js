@@ -37,7 +37,7 @@ router.route('/addReview').post(async(req, res) => {
     const body = req.body;
     const newReview = new review(body);
     newReview.save()
-      .then(() => res.json('review added!!'))
+      .then(() => res.send({status:"book is not present!!"}))
       .catch(err => res.status(400).json('Error: ' + err))
    }else{
       return res.send({status:"User can only write one review for a book!!"})

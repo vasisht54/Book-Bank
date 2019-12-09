@@ -9,6 +9,10 @@ const cart = mongoose.Schema({
     type:String,
     required: true
 },
+quantity:{
+    type: Number,
+    required: true
+}
  }, {
     timestamps: true
  }, { collection: 'cart' })

@@ -7,7 +7,11 @@ const order = mongoose.Schema({
    book : {
     type: String,
      required: true},
- }, {
+ quantity:{
+    type: Number,
+    required: true
+}
+}, {
     timestamps: true
  }, { collection: 'order' })
  

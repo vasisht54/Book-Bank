@@ -50,9 +50,9 @@ router.route('/deleteBooksFromOrder').delete(async(req,res)=>{
   router.route('/deleteOrderById').delete(async(req,res)=>{
     // console.log("user", user.data);
     // console.log("length",user.data[0].length);
-
+    let param = req.query.q;
      order.deleteOne(
-        {buyer:buyer,book:book},
+        {_id:param},
      ).then((data) => {
         if(data.deletedCount==0){
             res.send({status:'this book is not in order'});
