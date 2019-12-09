@@ -36,14 +36,15 @@ router.route('/addToCart').post(async(req,res)=>{
         }
      })
      console.log(response);
-     if(response.body.length>0){  
-         req.body.quantity = response.body[0].quantity +1;
+     if(response.data.length>0){  
+        await cart.update({_id:response.data[0]._id},{
+            $set:{quantity:response.data[0].quantity +1}});
+           return res.send({status:'Book quantity updated!!'})
      }
-
     let body = req.body;
     const newCart = new cart(body);
     newCart.save()
-        .then(()=>res.json({status:'Book added to cart!!'}))
+        .then(()=>res.send({status:'Book added to cart!!'}))
         .catch(err=>res.status(400).json('Error: '+err))
 });
 
