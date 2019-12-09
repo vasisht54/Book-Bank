@@ -25,6 +25,14 @@ router.route('/username').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err))
 });
 
+//get user by id
+router.route('/id').get((req,res)=>{
+  let query = req.query.q;
+  user.find({_id:query})
+  .then(user=> res.json(user))
+  .catch(err => res.status(400).json('Error: ' + err))
+});
+
 
 
 //to save new users
@@ -39,8 +47,6 @@ router.route('/register').post((req, res) => {
 
 //to update the user
 router.route('/updateUser').put((req, res) => {
-
-
 
   user.updateOne(
     { username: req.body.user.username },
