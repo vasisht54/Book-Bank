@@ -10,6 +10,10 @@ const order = mongoose.Schema({
  quantity:{
     type: Number,
     required: true
+},
+seller:{
+    type: String,
+    required: true
 }
 }, {
     timestamps: true

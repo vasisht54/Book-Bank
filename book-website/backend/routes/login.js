@@ -19,7 +19,6 @@ router.route('/').get((req, res) => {
 //find by username
 router.route('/username').get((req, res) => {
   let query = req.query.q;
-  console.log(query)
   user.find({ username: query })
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err))
@@ -81,7 +80,7 @@ router.route('/updateUser').put((req, res) => {
 router.route('/deleteUser').delete(async(req, res) => {
   user.findOne({ username: req.body.username })
     .then(async(users) => {
-      console.log(users);
+  
       if(users === null)
        return res.status(200).json({ 'status': 200, 'message': 'User not found' });
   

@@ -33,7 +33,6 @@ router.route('/booksByTitle').get((req,res)=>{
 //get all books by seller
 router.route('/booksBySeller').get((req,res)=>{
     let query = req.query.q;
-    console.log(query);
     book.find({seller:query})
     .then(books=>res.json(books))
     .catch(err=>res.status(400).json('Error: '+err))
@@ -42,8 +41,13 @@ router.route('/booksBySeller').get((req,res)=>{
 //add book
 router.route('/addBook').post(async(req,res)=>{
     const body = req.body;
-    let user = await axios.get(url+"user/username?q="+body.seller);
+ 
+    let checkBook = await book.find({title:body.title});
+    if(checkBook.length>0){
+        return res.send({status:"Book is already present"});
+    }
 
+    let user = await axios.get(url+"user/username?q="+body.seller);
     if(user.data.length==1 && user.data[0].usertype == "seller"){
     body.seller = user.data[0]._id;
     const newBook = new book(body);
