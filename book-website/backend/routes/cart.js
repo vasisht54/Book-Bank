@@ -46,8 +46,6 @@ router.route('/deleteBooksFromCart').delete(async(req,res)=>{
 
   })
 
-
-
   //to delete the all items from cart of a user
 router.route('/clearCart').delete(async(req,res)=>{
     let query = req.query.q;

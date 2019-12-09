@@ -18,7 +18,13 @@ router.route('/getAllReviews').get((req,res)=>{
 router.route('/addReview').post(async(req, res) => {
     try{
     let bookRes  = await axios.get(url+'book/booksByTitle?q='+req.body.book);
-    console.log(bookRes.data);
+    let userRes  = await axios.get(url+'user/username?q='+ req.body.buyer);
+
+    // console.log(userRes);
+    if(userRes.data[0].usertype!= 'buyer'){
+        return res.send({status: "Only buyer can review the book!!"});
+    }
+    // console.log(bookRes.data);
     if(bookRes.data.length>0){
         req.body.book = bookRes.data[0].title;
     let response = await axios.get(url+'review/findReviewByBookUser',{
