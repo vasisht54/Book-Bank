@@ -16,21 +16,15 @@ router.route('/getAllReviews').get((req,res)=>{
 
 //to save new review
 router.route('/addReview').post(async(req, res) => {
-
-    console.log(req.body.book);
-    console.log(req.body.buyer);
-     
-    let bookRes  = await axios.get('http://localhost:5000/book/booksById?q='+req.body.book);
-    if(bookRes.data.length==0){
-        return res.send({status:"Book doesnot exist!!"})
-    }
-
-    let response = await axios.get(url+'/review/findReviewByBookUser',{
-       data:{book:req.body.book,
+    try{
+    let bookRes  = await axios.get(url+'book/booksById?q='+req.body.book);
+    if(bookRes.data.hasOwnProperty('title')){
+    let response = await axios.get(url+'review/findReviewByBookUser',{
+       data:{
+        book:req.body.book,
         buyer:req.body.buyer
        }
     })
-
    if(response.data.length==0){
     const body = req.body;
     const newReview = new review(body);
@@ -38,8 +32,14 @@ router.route('/addReview').post(async(req, res) => {
       .then(() => res.json('review added!!'))
       .catch(err => res.status(400).json('Error: ' + err))
    }else{
-       res.send({status:"User can only write one review for a book!!"})
+      return res.send({status:"User can only write one review for a book!!"})
    }
+}else{
+    return res.send({status:"book is not present!!"})
+}
+}catch(e){
+    console.log(e);
+}
   });
 
 
