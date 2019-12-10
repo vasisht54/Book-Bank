@@ -72,13 +72,13 @@ router.route('/findReviewBySeller').get((req, res) => {
 router.route('/deleteReview').delete(async(req,res)=>{
     // console.log("user", user.data);
     // console.log("length",user.data[0].length);
-    let buyer = req.body.buyer;
-    let book = req.body.book;
+    let seller = req.body.seller;
+    let buyer = req.body.buyer; 
      review.deleteOne(
-        {buyer:buyer,book:book},
+        {buyer:buyer,seller:seller},
      ).then((data) => {
         if(data.deletedCount==0){
-            res.send({status:'this book has no reviews by user'});
+            res.send({status:'No review for this seller'});
         }else{
             res.send({status:'reviews deleted'});
         }
