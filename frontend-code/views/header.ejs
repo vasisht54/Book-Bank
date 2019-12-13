@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css"
+      integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/web.css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <span class="navbar-brand mb-0 h1 nav-link"><%= user ? [user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1).toLowerCase(), user.last_name.charAt(0).toUpperCase() + user.last_name.slice(1).toLowerCase()].join(' ') : "Book Store" %></span>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        <% if(!user
+              || user.usertype == 'buyer') { %>
+          <a class="nav-item nav-link" href="/">Home <span class="sr-only"></span></a>
+          
+          <% } %>
+          <% if(!user) { %>
+          <a class="nav-item nav-link" href="/login">Login</a>
+          <a class="nav-item nav-link" href="/register">Sign up</a>
+          <% } else { %>
+           <a class="nav-item nav-link" href="/logout">Logout</a>
+          <a class="nav-item nav-link" href="/viewProfile">Profile</a>
+          <% if(user.usertype === 'buyer') { %>
+          <a class="nav-item nav-link" href="/manageCart">Manage Cart<span class="sr-only"></span></a>
+          <a class="nav-item nav-link" href="/manageOrder">Manage Order<span class="sr-only"></span></a>
+           <% } %> 
+           <% if(user.usertype === 'seller') { %>
+          <a class="nav-item nav-link" href="/manageOrderSeller">Manage Order (Seller)<span class="sr-only"></span></a>
+           <% } %> 
+          <% if(user.usertype !== 'buyer') { %>
+          <a class="nav-item nav-link" href="/loginSuccess">Home</a>
+          <% } %>
+          <% } %>
+        </div>
+      </div>
+    </nav>
+  </body>
+</html>

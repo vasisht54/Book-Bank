@@ -1,0 +1,31 @@
+<%- include('header'); -%>  
+<%- include('logout'); -%>
+<link rel="stylesheet" href="/stylesheets/style.css">
+
+<h1> Login Successful </h1>
+
+  <h2>Welcome <%= user.first_name %></h2>
+
+
+<br>
+  <% if(user.usertype === 'admin') { %>
+    <a href="\crudUsersTest">CRUD Users</a>
+   <br>
+   <br>
+    <a href="\crudBooksByAdmin">CRUD Books</a>
+  <% }
+   if(user.usertype === 'seller') { %>
+    <a href="\crudBooksBySeller">CRUD Books</a>
+    <br>
+    <br>
+    <a href="\manageOrderSeller">Manage Order (Seller)</a>
+  <% }
+  if(user.usertype === 'admin') { %>
+    <br />
+    <br />
+    <a href="\crudReviews">CRUD Book Reviews %></a>
+  <% }
+  if(user.usertype === 'buyer') { %>
+    <a href="\">Search Books</a>
+  <% }
+  %>

@@ -1,0 +1,54 @@
+<%- include('header') %>
+<link rel="stylesheet" href="/stylesheets/styleForBookReview.css">
+<section class="get">
+    <h3>Seller reviews:</h3>
+    <div>   
+        <br />
+        <br />
+        <% if(book.title) {%>
+    <h4>Reviews for <u><%= seller.first_name + " " + seller.last_name %>:</u></h4>
+     <% for(var i=0; i < reviews.length; i++) { %>
+       <tr>
+         <td><b>Review <%= i+1 %>:</b></td>
+         <td><%= reviews[i].review %></td><br />
+         <td align="right"><b>Written by: <%= reviews[i].buyer %></b></td>
+         <br /><br />
+       </tr>
+    <% }  } %>
+    </div>
+</section>
+
+<% if(user) { %>
+<section class="insert">
+  <h6>Select your seller review here:</h6>
+
+    <form id="sellerReviewAdd" style="max-width: 300px">
+        <div class="form-group">
+            <input class="form-control" type="hidden" name="reviewer" value="<%= user.username %>"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="hidden" name="seller" value="<%= seller.username %>" />
+        </div>
+
+        <div class="form-group">
+            <select name="reviewSelection">
+                <option value="GOOD">Good</option>
+                <option value="AVERAGE">Average</option>
+                <option value="BAD">Bad</option>                
+            </select>
+        </div>
+      <button type="submit">Select review</button><br /><br />
+    </form> 
+
+    <form id="sellerReviewDelete">
+      <div class="form-group">
+        <input class="form-control" type="hidden" value="<%= user.username %>" name="reviewerUserName"/>
+        <input class="form-control" type="hidden" name="seller" value="<%= seller.username %>" />
+      </div>
+      <br /><br /><br /><br /><br /><br /><button type="submit">Delete your review</button><br /><br />
+    </form>  
+</section>
+
+<% } %>
+
+<%- include('footer'); -%>

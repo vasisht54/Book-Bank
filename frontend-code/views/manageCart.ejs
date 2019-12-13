@@ -1,0 +1,72 @@
+<%- include('header'); -%>
+<%- include('logout'); -%>
+<link rel="stylesheet" href="/stylesheets/style.css">
+<h4>Cart - Details</h4>
+<section class="get">
+    <h3>View Cart</h3>
+     <form role="form" name="viewCart" method="get" action="/users/viewCart">
+            <input type="hidden" class="form-control"  value= "<%= user.username %>" name="username">
+            
+                <button id="sub" class="btn btn-default" type="submit">Press To View Cart Items
+                </button>
+            </div>
+        </div>
+    </form>
+    <div>   
+     <% if(cart) { %>
+     <% for(var i=0; i < cart.length; i++) { %>
+       <tr>
+         <br> 
+         <td><b>Cart Item <%= i+1 %></b></td>
+         <br>
+         <td>Book Title : </td>
+         <td><%= cart[i].book %></td>  
+         <br>
+         <td>Quantity : </td>
+         <td><%= cart[i].quantity %></td>
+         <br>
+         <td>Bought By : </td>
+         <td><%= cart[i].buyer %></td>
+         <br>
+         <td>Sold By : </td>
+         <td><%= cart[i].seller %></td>
+         <br>
+       </tr>
+    <% } 
+    }%>
+
+    </div>
+</section>
+<section class="deleteItemFromCart">
+    <h3>Delete Books From Cart By Title</h3>
+    <form id="deleteItemFromCart">
+        <div class="form-group">
+            <input type="hidden" class="form-control"  value= "<%= user.username %>" name="username" >
+            <input type="text" class="form-control" name="title" placeholder="Enter book title">
+            <button id="sub" class="btn btn-default" type="submit">Press To Clear Book From Cart
+            </button>
+        </div>
+    </form>
+
+</section><section class="clearCart">
+    <h3>Clear Cart</h3>
+    <form id="clearCart">
+        <div class="form-group">
+            <input type="hidden" class="form-control"  value= "<%= user.username %>" name="username">
+            <button id="sub" class="btn btn-default" type="submit">Press To Clear Cart
+            </button>
+        </div>
+    </form>
+</section>
+<section class="Buy">
+    <h3>Buy Items In Cart</h3>
+    <form id="addToOrders">
+        <div class="form-group">
+            <input type="hidden" class="form-control"  value= "<%= user.username %>" name="username">
+            <button id="sub" class="btn btn-default" type="submit">Press To Buy Cart Items
+            </button>
+        </div>
+    </form>
+</section>
+
+<%- include('footer'); -%>

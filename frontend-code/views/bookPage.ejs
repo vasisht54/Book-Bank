@@ -1,0 +1,76 @@
+  <%- include('header') %>
+  <link rel="stylesheet" href="/stylesheets/styleForBookReview.css">
+
+<% if(book.image) { %> 
+<div class="col-sm-2 my-2">
+<img class="card-img-top" src=" <%= book.image.thumbnail %> ">
+</div>
+<% } %>
+<tr>
+  
+  <br />
+  <br />
+  
+  <th style="font-weight: bold">Book title: <%= book.title %></th>
+  <br />
+  <br />
+  <td style="color: black; font-weight: bold">
+    About: <%= book.description %>
+  </td>
+  <br />
+  <br />
+  <td>Number of pages: <%= book.pagecount %></td>
+  <br />
+  <br />
+  <td>Published year: <%= book.publishedDate %></td>
+  <br />
+  <br />
+  <td>Price: <%= book.price.amount%></td>
+  <br />
+  <br />
+  <td>Author: <%= book.authors%></td>
+  <br />
+  <br />
+  <td>Categories: <%= book.categories %></td>
+  <br />
+  <br />
+  <br />
+</tr>
+%>
+<% if(!user) { %>
+  <form role="form" action="/books/get-reviews-for-buyer" method="post" style="max-width: 300px">
+    <input type="hidden" name="bookTitle" value="<%= book.title %>" readonly/>
+    <button type="submit" >Read Book reviews</button>
+    <br>
+    <br>
+  </form>
+  <form role="form" action="/books/get-seller-reviews" method="post" style="max-width: 300px">
+    <input type="hidden" name="bookTitle" value="<%= book.title %>" readonly/>
+    <button type="submit" >Read Seller reviews</button>
+    <br>
+    <br>
+  </form>
+<% } else { %>
+
+<form role="form" action="/books/get-reviews-for-buyer" method="post" style="max-width: 300px">
+  <input type="hidden" name="bookTitle" value="<%= book.title %>" readonly/>
+  <button type="submit">CRUD Book reviews</button>
+  <br>
+  <br>
+</form>
+<form role="form" action="/books/get-seller-reviews" method="post" style="max-width: 300px">
+  <input type="hidden" name="bookTitle" value="<%= book.title %>" readonly/>
+  <button type="submit">CRUD Seller reviews</button>
+  <br>
+  <br>
+</form>
+
+<% } %>
+<% if(user) { %>
+<form id = "addToCart">
+  <input type="hidden" name="bookTitle" value="<%= book.title %>" readonly/>
+  <input type="hidden" name="username" value="<%= user.username %>" readonly/> 
+  <button type="submit">Add book To Cart</button>
+</form>
+ <% } %>
+<%- include('footer') %>

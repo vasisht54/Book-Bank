@@ -1,0 +1,54 @@
+<%- include('header'); -%>
+<%- include('logout'); -%>
+    <h1>View Profile Information</h1>
+        <table style="width:100%">
+       <tr>
+            <th>Attribute</th>
+            <th>Information</th>
+       </tr>
+       <tr>
+            <td>First Name</td>
+            <td><%= user.first_name %></td>
+       </tr>
+       <tr>
+            <td>Last Name</td>
+            <td><%= user.last_name %></td>
+       </tr>
+       <tr>
+            <td>Username</td>
+            <td><%= user.username %></td>
+       </tr>
+       <tr>
+            <td>Address</td>
+            <td><%= user.address.address %></td>
+       </tr>
+       <tr>
+            <td>Pincode</td>
+            <td><%= user.address.pincode %></td>
+       </tr>
+       <tr>
+            <td>City</td>
+            <td><%= user.address.city %></td>
+       </tr>
+       <tr>
+            <td>State</td>
+            <td><%= user.address.state %></td>
+       </tr>
+       <tr>
+            <td>Country</td>
+            <td><%= user.address.country %></td>
+       </tr>
+  
+</table>
+<br>
+<br>
+<br>
+<br>
+<a href="\updateUser">Update Profile</a>
+<%- include('footer'); -%>
+
+<script>
+function myFunction() {
+  alert("Profile Succesfully Updated");
+}
+</script>

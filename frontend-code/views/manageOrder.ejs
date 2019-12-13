@@ -1,0 +1,53 @@
+<%- include('header'); -%>
+<%- include('logout'); -%>
+<link rel="stylesheet" href="/stylesheets/style.css">
+<h4>Order Details</h4>
+<section class="get">
+    <h3>View Order</h3>
+     <form role="form" name="viewOrder" method="get" action="/users/viewOrder">
+            <input type="hidden" class="form-control"  value= "<%= user.username %>" name="username">
+            
+                <button id="sub" class="btn btn-default" type="submit">Press To View Ordered Items
+                </button>
+            </div>
+        </div>
+    </form>
+    <div>   
+     <% if(order) { %>
+     <% for(var i=0; i < order.length; i++) { %>
+       <tr>
+         <br> 
+         <td><b>Ordered Item <%= i+1 %></b></td>
+         <br>
+         <td>Order ID : </td>
+         <td><%= order[i]._id %></td>  
+         <br>
+         <td>Book Title : </td>
+         <td><%= order[i].book %></td>  
+         <br>
+         <td>Quantity : </td>
+         <td><%= order[i].quantity %></td>
+         <br>
+         <td>Bought By : </td>
+         <td><%= order[i].buyer %></td>
+         <br>
+         <td>Sold By : </td>
+         <td><%= order[i].seller %></td>
+       </tr>
+    <% } 
+    }%>
+
+    </div>
+</section>
+<section class="deleteOrderByID">
+    <h3>Delete Order By ID</h3>
+    <form id="deleteOrderByIDSeller">
+        <div class="form-group">
+            <input type="text" class="form-control" name="orderId" placeholder = "Enter Order Id">
+            <button id="sub" class="btn btn-default" type="submit">Press To Clear Book From Cart
+            </button>
+        </div>
+    </form>
+
+</section>
+<%- include('footer'); -%>

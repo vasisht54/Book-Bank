@@ -1,0 +1,38 @@
+<html>
+  <div class="container">
+    <h1>Registration Page</h1>
+    <p class="lead">Enter details here.</p><br/>
+    <form role="form" action="/registersuccess" method="post" style="max-width: 300px">
+      <div class="form-group">
+        <input class="form-control" type="text" name="first_name" placeholder="Enter First Name"/>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="last_name" placeholder="Enter Last Name"/>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="username" placeholder="Enter Username"/>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="password" name="password" placeholder="Password"/>
+      </div>
+      <p></p>
+      <div class="form-group">
+        <input class="form-control" type="address" name="address" placeholder="address"/>
+        <input class="form-control" type="pin" name="pin" placeholder="pin"/>   
+        <input class="form-control" type="city" name="city" placeholder="city"/>
+        <input class="form-control" type="state" name="state" placeholder="state"/>
+        <input class="form-control" type="country" name="country" placeholder="country"/>
+      </div>
+    </form>
+    <div class="form-group"></div>
+    <label>
+      Select User Type             
+      <select id="myList">             
+        <option value="buyer">buyer</option>               
+        <option value="seller">seller</option>
+      </select>
+
+      <button class="btn btn-default" type="submit">Submit</button>
+    </label>
+  </div>
+</html>

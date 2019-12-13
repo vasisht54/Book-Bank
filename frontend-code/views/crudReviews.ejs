@@ -1,0 +1,60 @@
+<%- include('header'); -%>
+<%- include('logout'); -%>
+<link rel="stylesheet" href="/stylesheets/style.css">
+<h4>CRUD - Reviews</h4>
+<section class="get">
+    <h3>Get Reviews for books:</h3>
+    <form role="form" action="/books/get-reviews" method="post" style="max-width: 300px">
+        <input type="text" class="form-control" placeholder="Enter book name here" id="textBox" name="bookForReviews">
+     <button type="submit">Get Reviews</button>
+    </form>
+    <div>   
+        <br />
+        <br />
+        <% if(book) { if( book.title) {%>
+     <h4>Reviews for <u><%= book.title %></u></h4>   
+     <% for(var i=0; i < reviews.length; i++) { %>
+       <tr>
+         <td><b>Review <%= i+1 %>:</b></td>
+         <td><%= reviews[i].review %></td><br />
+         <td>--<%= reviews[i].buyer %></td>
+         <br /><br />
+       </tr>
+    <% }  } } %>
+
+    </div>
+</section>
+<section class="delete">
+    <h3>Delete Book Review:</h3>
+    <form id="reviewDelete">
+        <div class="form-group">
+            <input class="form-control" type="text" name="bookToDelete" placeholder="Enter title of the book" /><br />
+            <input class="form-control" type="text" name="reviewerUserName" placeholder="Enter username of the reviewer" />
+        </div>
+        <button type="submit">DELETE</button>
+    </form>
+</section>
+<section class="insert">
+    <h3>Write book review:</h3>
+    <form id="reviewAdd">
+        <div class="form-group">
+            <input class="form-control" type="text" name="reviewer" placeholder="Enter username of buyer" /><br />
+            <input class="form-control" type="text" name="bookTitle" placeholder="Enter book title" /><br />
+            <input class="form-control" type="text" name="review" placeholder="Enter review here" /><br />
+        </div>
+        <button type="submit">Add review</button>
+    </form>
+</section>
+<section class="update">
+    <h3>Update book review:</h3>
+    <form id="reviewUpdate">
+        <div class="form-group">
+            <input class="form-control" type="text" name="reviewer" placeholder="Enter username of buyer" /><br />
+            <input class="form-control" type="text" name="bookTitle" placeholder="Enter book title" /><br />
+            <input class="form-control" type="text" name="review" placeholder="Enter review here" /><br />
+        </div>
+        <button type="submit">Update review</button>
+    </form>
+</section>
+
+<%- include('footer'); -%>

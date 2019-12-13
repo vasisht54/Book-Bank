@@ -1,0 +1,44 @@
+<%- include('header'); -%>
+<div class="container">
+    <h1>Register Page</h1>
+    <p class="lead">Please Register.</p><br />
+    <form id="register" style="max-width: 300px">
+        <div class="form-group">
+            <input class="form-control" type="text" name="first_name" placeholder="Enter First Name" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="last_name" placeholder="Enter Last Name" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="username" placeholder="Enter Username" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password" />
+        </div>
+        <div class="form-group">
+            <select name="usertype">
+                <option value="buyer">buyer</option>
+                <option value="seller">seller</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="address" placeholder="Address" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="number" name="pincode" placeholder="Pincode" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="city" placeholder="City" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="state" placeholder="State" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="country" placeholder="Country" />
+        </div>
+        <button class="btn btn-default" type="submit">Submit</button>
+    </form>
+</div>
+<%- include('footer'); -%>
+
+

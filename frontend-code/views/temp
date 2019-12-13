@@ -1,0 +1,92 @@
+<% for(var i=0; i < book.length; i++) { %>
+        <tr>
+            <br>
+            <td><b>Book <%= i+1 %></b></td>
+            <br>
+            <td>Book: </td>
+            <td><%= book[i].title %></td>
+            <br>
+        </tr>
+    <% } %>
+
+
+
+
+    <%
+        var storage;
+        var fail;
+        var uid;
+        try {
+            uid = new Date;
+            (storage = window.localStorage).setItem(uid, uid);
+            fail = storage.getItem(uid) != uid;
+            storage.removeItem(uid);
+            fail && (storage = false);
+        } catch (exception) {}
+        %>
+
+
+
+    <form id="heyForm" role="form" action="/books/bookPage" method="post" style="max-width: 300px">
+        <div class="form-group">
+            <input class="form-control" value = "<%= book[i].title %>" type="text" name="title" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" value = "<%= book[i].description %>" type="text" name="description" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" value = "<%= book[i].publishedDate %>" type="text" name="published date" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" value = "<%= book[i].updatedAt %>" type="date" name="Updated date"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" value = "<%= book[i].createdAt %>" type="date" name="Created date" />
+        </div>
+        <button class="btn btn-default" type="submit">Submit</button>
+    </form>
+
+
+//delete review
+router.post('/delete-review', async(req, res) => {
+
+    let bookRes;
+    var bookId;
+    var userRes;
+    var userId;
+    let delReponse;
+
+   try {
+        delResponse = await axios.delete('http://localhost:5000/review/deleteReview',{
+            data:{
+            book:req.body.bookToDelete,
+            buyer:req.body.reviewerUserName
+            }
+        })
+        console.log(delResponse.status);
+    }
+    catch(e) {
+        console.log(e);
+    }
+    res.render('crudReviews', {reviews: [], user:req.user, title: delResponse});      
+});
+
+
+
+   //Getting book by title to fetch its ID
+        bookRes = await axios.get('http://localhost:5000/book/booksByTitle?q='+ req.body.bookToDelete);
+        bookId = bookRes.data[0]._id;
+        console.log("Book id=" + bookId);
+
+        userRes = await axios.get('http://localhost:5000/user/username?q='+ req.body.reviewerUserName);
+        userId = userRes.data[0]._id;
+        console.log("Reviewer userId=" + userId);
+
+        <% if(!user) { %>
+  <form role="form" action="/books/get-reviews-for-buyer" method="post" style="max-width: 300px">
+    <input type="hidden" name="bookTitle" value="<%= book.title %>" readonly/>
+    <button type="submit">Get reviews</button>
+    <br>
+    <br>
+  </form>
+  <% } %>

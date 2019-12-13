@@ -1,0 +1,53 @@
+<%- include('header') %>
+<link rel="stylesheet" href="/stylesheets/styleForBookReview.css">
+<section class="get">
+    <h3>Reviews:</h3>
+    <div>   
+        <br />
+        <br />
+        <% if(book.title) {%>
+     <h4>Reviews for <u><%= book.title %>:</u></h4>   
+     <% for(var i=0; i < reviews.length; i++) { %>
+       <tr>
+         <td><b>Review <%= i+1 %>:</b></td>
+         <td><%= reviews[i].review %></td><br />
+         <td align="right"><b>Written by: <%= reviews[i].buyer %></b></td>
+         <br /><br />
+       </tr>
+    <% }  } %>
+    </div>
+</section>
+
+<% if(user) { %>
+<section class="insert">
+  <h6>Write your book review:</h6>
+    <form id="reviewAdd">
+      <div class="form-group">
+        <input class="form-control" type="hidden" value="<%= user.username%>" name="reviewer"/>
+        <input class="form-control" type="hidden" name="bookTitle" value="<%= book.title %>" />
+        <input class="form-control" type="text" name="review" placeholder="Type your review here" />
+      </div>
+        <button type="submit">Add review</button><br /><br />
+    </form>
+
+    <form id="reviewUpdate">
+      <div class="form-group">
+        <input class="form-control" type="hidden" value="<%= user.username%>" name="reviewer"/>
+        <input class="form-control" type="hidden" name="bookTitle" value="<%= book.title %>" />
+        <br /><br /><br /><br /><br /><br /><input class="form-control" type="text" name="review" placeholder="Type your review here" />
+      </div>
+        <button type="submit">Update your review</button>
+    </form><br />
+
+    <form id="reviewDelete">
+      <div class="form-group">
+        <input class="form-control" type="hidden" value="<%= user.username %>" name="reviewerUserName"/>
+        <input class="form-control" type="hidden" name="bookToDelete" value="<%= book.title %>" />
+      </div>
+      <br /><br /><br /><br /><br /><br /><button type="submit">Delete your review</button><br /><br />
+    </form>
+</section>
+
+<% } %>
+
+<%- include('footer'); -%>

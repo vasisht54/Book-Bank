@@ -1,0 +1,124 @@
+<%- include('header'); -%>
+<%- include('logout'); -%>
+<link rel="stylesheet" href="/stylesheets/style.css">
+<h4>CRUD - BOOKS</h4>
+<section class="insert">
+    <h3>Add Book</h3>
+    <form id="bookCreateBySeller">
+        
+        <div class="form-group">
+            <input class="form-control" type="text" name="title" placeholder="Enter Book Title" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type = "text" name = "id"  placeholder="Enter Seller Username">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="author" placeholder="Enter Author Name" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="categories" placeholder="Enter Categories" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="publisher" placeholder="Enter Publisher" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="number" name="publishedYear" placeholder="Enter Published Year" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="number" name="price" placeholder="Enter Price" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="language" placeholder="Enter Language" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="number" name="pagecount" placeholder="Enter Page Count" />
+        </div>
+        <button class="btn btn-default" type="submit">Submit</button>
+    </form>
+</section>
+<section class="get">
+    <h3>Get Book By Keyword</h3>
+     <form name="searchForm1" method="post" action="/books/search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search books" id="textBox" name="searchText">
+            <div class="input-group-btn">
+                <button id="sub" class="btn btn-default" type="submit">Search
+                </button>
+            </div>
+        </div>
+    </form>
+    <div>   
+     <% if(book) { %>
+     <% for(var i=0; i < book.length; i++) { %>
+       <tr>
+         <br> 
+         <td><b>Book <%= i+1 %></b></td>
+         <br>
+         <td>Title : </td>
+         <td><%= book[i].title %></td>
+         <br>
+         <td>Author : </td>
+         <td><%= book[i].authors[0] %></td>
+         <br>
+         <td>Categories : </td>
+         <td><%= book[i].categories %></td>
+         <br>
+         <td>Publisher : </td>
+         <td><%= book[i].publisher %></td>
+         <br>
+         <td>Published Year : </td>
+         <td><%= book[i].publishedDate %></td>
+         <br>
+         <td>Price in USD: </td>
+         <td><%= book[i].price.amount %></td>
+         <br>
+         <td>Language : </td>
+         <td><%= book[i].language %></td>
+         <br>
+         <td>Page Count : </td>
+         <td><%= book[i].pagecount %></td>
+         <br>
+       </tr>
+    <% } 
+    }%>
+
+    </div>
+</section>
+<section class="update">
+    <h3>Update Book Information By Title:</h3>
+    <form id="bookUpdateBySeller"> 
+        <div class="form-group">
+            <input class="form-control"  type="text" name="title" placeholder="Enter Title" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="id" placeholder="Enter New Seller Username" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="categories" placeholder="Enter New Categories" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="publisher" placeholder="Enter New Publisher" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="number" name="price" placeholder="Enter New Price in USD"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="number" name="publishedYear" placeholder="Enter New Published Year" />
+        </div>
+        <div class="form-group">
+           <input class="form-control" type="number" name="pagecount" placeholder="Enter New Page Count" />
+        </div>
+        <button class="btn btn-default" type="submit">Submit</button>
+    </form>
+</section>
+</section>
+<section class="delete">
+    <h3>Delete Book By Title:</h3>
+    <form id="bookDeleteByTitle">
+        <div class="form-group">
+            <input class="form-control" type="text" name="title" placeholder="Enter Title of Book" />
+        </div>
+        <button class="btn btn-default" type="submit">DELETE</button>
+    </form>
+</section>
+<%- include('footer'); -%>

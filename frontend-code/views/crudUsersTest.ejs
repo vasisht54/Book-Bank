@@ -1,0 +1,132 @@
+<%- include('header'); -%>
+<%- include('logout'); -%>
+<link rel="stylesheet" href="/stylesheets/style.css">
+<h4>CRUD - USERS</h4>
+<section class="create">
+    <h3>Insert User Information:</h3>
+    <form id="register"> 
+        <div class="form-group">
+            <input class="form-control" type="text" name="first_name" placeholder="Enter First Name" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="last_name" placeholder="Enter Last Name" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="username" placeholder="Enter Username" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password" />
+        </div>
+        <div class="form-group">
+            <select name="usertype">
+                <option value="buyer">buyer</option>
+                <option value="seller">seller</option>
+                <option value="admin">admin</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="address" placeholder="Address" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="number" name="pincode" placeholder="Pincode" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="city" placeholder="City" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="state" placeholder="State" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="country" placeholder="Country" />
+        </div>
+        <button class="btn btn-default" type="submit">Submit</button>
+    </form>
+</section>
+
+<section class="get">
+    <h3>Get Users:</h3>
+    <a href="/users/get-data">LOAD DATA</a>
+    <div>   
+     
+     <% for(var i=0; i < users.length; i++) { %>
+       <tr>
+         <br> 
+         <td><b>User <%= i+1 %></b></td>
+         <br>
+         <td>Username : </td>
+         <td><%= users[i].username %></td>
+         <br>
+         <td>First Name : </td>
+         <td><%= users[i].first_name %></td>
+         <br>
+         <td>Last Name : </td>
+         <td><%= users[i].last_name %></td>
+         <br>
+         <td>User Type : </td>
+         <td><%= users[i].usertype %></td>
+         <br>
+         <td>Address : </td>
+         <td><%= users[i].address.address %></td>
+         <br>
+         <td>Pincode : </td>
+         <td><%= users[i].address.pincode %></td>
+         <br>
+         <td>City : </td>
+         <td><%= users[i].address.city %></td>
+         <br>
+         <td>State : </td>
+         <td><%= users[i].address.state %></td>
+         <br>
+         <td>Country : </td>
+         <td><%= users[i].address.country %></td>
+         <br> 
+
+       </tr>
+    <% } %>
+
+    </div>
+</section>
+<section class="update">
+    <h3>Update User Information:</h3>
+    <form id="userUpdateByAdmin"> 
+        <div class="form-group">
+            <input class="form-control"  type="text" name="first_name" placeholder="Enter First Name" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="last_name" placeholder="Enter Last Name" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="username" placeholder="Username"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="password" name="password" placeholder="Password" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="address" placeholder="Address" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="number" name="pincode" placeholder="Pincode" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="city" placeholder="City" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="state" placeholder="State" />
+        </div>
+        <div class="form-group">
+            <input class="form-control"  type="text" name="country" placeholder="Country" />
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</section>
+</section>
+<section class="delete">
+    <h3>Delete User By Username:</h3>
+    <form id="userDelete">
+        <div class="form-group">
+            <input class="form-control" type="text" name="username" placeholder="Enter Username" />
+        </div>
+        <button type="submit">DELETE</button>
+    </form>
+</section>
+<%- include('footer'); -%>
